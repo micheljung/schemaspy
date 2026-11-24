@@ -1,11 +1,12 @@
 > **About this fork:** upstream has had no release since 7.0.2, whose dependencies and image carry known vulnerabilities.
-> This fork ships the same SchemaSpy with patched dependencies, as `ghcr.io/micheljung/schemaspy:<version>` and as jars on the
-> [releases page](https://github.com/micheljung/schemaspy/releases). Every build fails on HIGH/CRITICAL Trivy findings, and the
+> This fork ships the same SchemaSpy with patched dependencies, as `ghcr.io/micheljung/schemaspy:<version>`, as
+> `io.github.micheljung:schemaspy` on Maven Central and as jars on the [releases page](https://github.com/micheljung/schemaspy/releases).
+> Only the Maven groupId differs from upstream; the Java packages are still `org.schemaspy.*`. Every build fails on HIGH/CRITICAL Trivy findings, and the
 > published image is re-scanned weekly. Versions are upstream's next version plus `-p<N>`.
 
 [![Logotype](https://github.com/schemaspy/schemaspy/blob/master/docs/source/_static/schemaspy_logo.png)](https://schemaspy.org/)
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.schemaspy/schemaspy/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.schemaspy/schemaspy/)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.micheljung/schemaspy/badge.svg)](https://central.sonatype.com/artifact/io.github.micheljung/schemaspy)
 [![Docker Pulls](https://img.shields.io/docker/pulls/schemaspy/schemaspy.svg)](https://hub.docker.com/r/schemaspy/schemaspy/)
 [![Development](https://github.com/schemaspy/schemaspy/actions/workflows/development.yml/badge.svg)](https://github.com/schemaspy/schemaspy/actions/workflows/development.yml)
 [![Documentation Status](https://readthedocs.org/projects/schemaspy/badge/?version=latest)](http://schemaspy.readthedocs.io/en/latest/?badge=latest)
@@ -39,8 +40,8 @@ The fat JAR is also attached to releases on GitHub.
 The "maven central" badge at the top of this page will take you straight to the latest version on Maven Central.
 
 The Maven GAV of the two artifacts is as follows:
-- bare-bone JAR: `org.schemaspy:schemaspy:<version>`
-- fat JAR: `org.schemaspy:schemaspy:<version>:app` **← note the `app` classifier**
+- bare-bone JAR: `io.github.micheljung:schemaspy:<version>`
+- fat JAR: `io.github.micheljung:schemaspy:<version>:app` **← note the `app` classifier**
 
 # Quick start
 
