@@ -140,11 +140,12 @@ jobs:
       - name: Set release version
         run: ./mvnw -B -q versions:set -DnewVersion="${GITHUB_REF_NAME#v}" -DgenerateBackupPoms=false
       - name: Deploy to Maven Central
-        run: ./mvnw -B --errors -P release,sign -DskipTests deploy -Dscm.revision="$GITHUB_SHA" -Dproject.build.outputTimestamp="$(git log -1 --format=%cI)"
+        run: ./mvnw -B --errors -P release,sign -Dskip.surefire=true -DskipITs deploy -Dscm.revision="$GITHUB_SHA" -Dproject.build.outputTimestamp="$(git log -1 --format=%cI)"
         env:
           CENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
           CENTRAL_TOKEN: ${{ secrets.CENTRAL_TOKEN }}
-          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          # setup-java points maven-gpg-plugin at this variable (gpg.passphraseEnvName)
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
       - name: Central jar matches scanned jar
         run: cmp target/schemaspy-*-app.jar scanned/schemaspy-*-app.jar
 
