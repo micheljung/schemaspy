@@ -9,7 +9,7 @@ class SchemaSpyJarFileIT {
     @Test
     void path() {
         assertThat(new SchemaSpyJarFile().path().toString())
-            .matches(".*schemaspy-[\\d\\.]+(-SNAPSHOT)?\\.jar(\\.original)?$");
+            .matches(".*schemaspy-[\\d\\.]+(-SNAPSHOT|-p\\d+)?\\.jar(\\.original)?$");
     }
 
 }
