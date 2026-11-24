@@ -98,9 +98,7 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
-          tags: |
-            ${{ env.IMAGE }}:${{ env.VERSION }}
-            ${{ env.IMAGE }}:latest
+          tags: ${{ env.IMAGE }}:${{ env.VERSION }}
           labels: |
             org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
             org.opencontainers.image.revision=${{ github.sha }}
@@ -111,6 +109,8 @@ jobs:
           scanners: vuln
           severity: HIGH,CRITICAL
           exit-code: '1'
+      - name: Tag latest
+        run: docker buildx imagetools create -t "$IMAGE:latest" "$IMAGE:$VERSION"
       - name: Checksum
         run: cd target && sha512sum schemaspy-*-app.jar > "schemaspy-${VERSION}-app.jar.sha512"
       - uses: softprops/action-gh-release@8a0cd651e5b2365bd640854a3fa5dfc70e4875f3 # v3.0.4
