@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.schemaspy</groupId>
+    <groupId>io.github.micheljung</groupId>
     <artifactId>schemaspy</artifactId>
     <packaging>jar</packaging>
     <name>SchemaSpy</name>
     <version>7.0.3-SNAPSHOT</version>
-    <url>http://schemaspy.org</url>
+    <url>https://github.com/micheljung/schemaspy</url>
     <description>SchemaSpy generates HTML and PNG-based entity relationship diagrams from JDBC-enabled databases.
     </description>
     <inceptionYear>2016</inceptionYear>
@@ -22,6 +22,7 @@
         <java.version>17</java.version>
         <skip.surefire>false</skip.surefire>
         <scm.revision>${project.scm.tag}</scm.revision>
+        <project.build.outputTimestamp>2026-11-24T00:00:00Z</project.build.outputTimestamp>
     </properties>
     <issueManagement>
         <url>https://github.com/schemaspy/schemaspy/issues</url>
@@ -35,21 +36,11 @@
         </license>
     </licenses>
     <scm>
-        <url>https://github.com/schemaspy/schemaspy</url>
-        <connection>scm:git:https://github.com/schemaspy/schemaspy.git</connection>
-        <developerConnection>scm:git:https://github.com/schemaspy/schemaspy.git</developerConnection>
+        <url>https://github.com/micheljung/schemaspy</url>
+        <connection>scm:git:https://github.com/micheljung/schemaspy.git</connection>
+        <developerConnection>scm:git:https://github.com/micheljung/schemaspy.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
-    <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://central.sonatype.com/repository/maven-snapshots/</url>
-        </snapshotRepository>
-        <repository>
-            <id>ossrh</id>
-            <url>https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/</url>
-        </repository>
-    </distributionManagement>
     <developers>
         <developer>
             <id>rafalkasa</id>
@@ -64,6 +55,11 @@
             <email>nils.petzall@gmail.com</email>
             <organization>SchemaSpy</organization>
             <organizationUrl>https://schemaspy.org/</organizationUrl>
+        </developer>
+        <developer>
+            <id>micheljung</id>
+            <name>Michel Jung</name>
+            <url>https://github.com/micheljung</url>
         </developer>
     </developers>
     <dependencyManagement>
@@ -532,17 +528,6 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.13</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <serverId>ossrh</serverId>
-                    <nexusUrl>https://ossrh-staging-api.central.sonatype.com/service/local/</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
                 <version>3.0.0</version>
@@ -579,6 +564,17 @@
                         </executions>
                     </plugin>
                     <plugin>
+                        <groupId>org.sonatype.central</groupId>
+                        <artifactId>central-publishing-maven-plugin</artifactId>
+                        <version>0.12.0</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <publishingServerId>central</publishingServerId>
+                            <autoPublish>true</autoPublish>
+                            <waitUntil>published</waitUntil>
+                        </configuration>
+                    </plugin>
+                    <plugin>
                         <artifactId>maven-javadoc-plugin</artifactId>
                         <executions>
                             <execution>
@@ -599,7 +595,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>3.0.1</version>
+                        <version>3.2.8</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
