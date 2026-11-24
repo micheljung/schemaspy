@@ -1,3 +1,8 @@
+> **About this fork:** upstream has had no release since 7.0.2, whose dependencies and image carry known vulnerabilities.
+> This fork ships the same SchemaSpy with patched dependencies, as `ghcr.io/micheljung/schemaspy:<version>` and as jars on the
+> [releases page](https://github.com/micheljung/schemaspy/releases). Every build fails on HIGH/CRITICAL Trivy findings, and the
+> published image is re-scanned weekly. Versions are upstream's next version plus `-p<N>`.
+
 [![Logotype](https://github.com/schemaspy/schemaspy/blob/master/docs/source/_static/schemaspy_logo.png)](https://schemaspy.org/)
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.schemaspy/schemaspy/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.schemaspy/schemaspy/)
