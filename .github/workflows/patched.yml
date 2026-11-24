@@ -34,7 +34,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y graphviz
       - name: Set release version
         if: startsWith(github.ref, 'refs/tags/v')
-        run: ./mvnw -B -q versions:set -DnewVersion="${GITHUB_REF_NAME#v}" -DgenerateBackupPoms=false
+        run: ./mvnw -B -q versions:set -DnewVersion="${GITHUB_REF_NAME#v}" -DgenerateBackupPoms=false -DupdateBuildOutputTimestampPolicy=never
       - name: Build, test
         run: ./mvnw -B --errors verify -Dscm.revision="$GITHUB_SHA" -Dproject.build.outputTimestamp="$(git log -1 --format=%cI)"
       - name: Scan app jar
@@ -138,7 +138,11 @@ jobs:
           name: jar
           path: scanned
       - name: Set release version
-        run: ./mvnw -B -q versions:set -DnewVersion="${GITHUB_REF_NAME#v}" -DgenerateBackupPoms=false
+        run: ./mvnw -B -q versions:set -DnewVersion="${GITHUB_REF_NAME#v}" -DgenerateBackupPoms=false -DupdateBuildOutputTimestampPolicy=never
+      - name: Build release artifacts
+        run: ./mvnw -B --errors -P release -Dskip.surefire=true -DskipITs package -Dscm.revision="$GITHUB_SHA" -Dproject.build.outputTimestamp="$(git log -1 --format=%cI)"
+      - name: Release jar matches scanned jar
+        run: cmp target/schemaspy-*-app.jar scanned/schemaspy-*-app.jar
       - name: Deploy to Maven Central
         run: ./mvnw -B --errors -P release,sign -Dskip.surefire=true -DskipITs deploy -Dscm.revision="$GITHUB_SHA" -Dproject.build.outputTimestamp="$(git log -1 --format=%cI)"
         env:
@@ -146,7 +150,7 @@ jobs:
           CENTRAL_TOKEN: ${{ secrets.CENTRAL_TOKEN }}
           # setup-java points maven-gpg-plugin at this variable (gpg.passphraseEnvName)
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-      - name: Central jar matches scanned jar
+      - name: Deployed jar matches scanned jar
         run: cmp target/schemaspy-*-app.jar scanned/schemaspy-*-app.jar
 
   release:
